@@ -1,0 +1,56 @@
+<% const pageTitle = typeof title !== 'undefined' && title ? title + ' | Конференции.РФ' : 'Конференции.РФ'; %>
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= pageTitle %></title>
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container">
+        <a class="navbar-brand" href="/rooms">Конференции.РФ</a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#mainNav"
+          aria-controls="mainNav"
+          aria-expanded="false"
+          aria-label="Переключить навигацию"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+          <div class="navbar-nav me-auto">
+            <a class="nav-link" href="/rooms">Помещения</a>
+
+            <% if (typeof session !== 'undefined' && session.userId) { %>
+              <a class="nav-link" href="/dashboard">Мои заявки</a>
+              <a class="nav-link" href="/create">Новая заявка</a>
+
+              <% if (session.login === 'Conf2027') { %>
+                <a class="nav-link" href="/admin">Админ-панель</a>
+              <% } %>
+            <% } %>
+          </div>
+
+          <div class="navbar-nav">
+            <% if (typeof session !== 'undefined' && session.userId) { %>
+              <span class="navbar-text me-3"><%= session.fio %></span>
+              <a class="nav-link" href="/logout">Выйти</a>
+            <% } else { %>
+              <a class="nav-link" href="/login">Вход</a>
+              <a class="nav-link" href="/register">Регистрация</a>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mt-4">

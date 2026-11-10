@@ -1,0 +1,109 @@
+﻿.btn,
+.form-control,
+.nav-link,
+.card {
+  transition: all 0.3 ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0,15);
+}
+
+.form-control:focus {
+  border-color: blue;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to{
+    opacity: 1;
+    transform: translateY(0)
+  }
+}
+
+.card {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+
+.navbar .nav-link {
+  transition: color 0.2s ease;
+}
+
+.navbar .nav-link:hover {
+  color: #ffc107 !important;
+}
+
+@keyframes siideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to{
+    opacity: 1;
+    transform: translateY(0);    
+  }
+}
+
+.alert {
+  animation: slideDown 0.4s ease-out;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    trasform: scale(1);
+  }
+  50% {
+    trasform: scale(1.05);
+  }
+}
+
+.badge-bd-secondary{
+  animation: pulse 2s infinite;
+}
+
+.btn {
+  min-height: 44px;
+}
+
+@media (max-widht:576px) {
+  .card {
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  .d-flex.gap-2 {
+    flex-direction: column;
+  }
+
+  .d-flex.gap-2 .btn {
+    width: 100%;
+  }
+}
+
+body {
+  overflow-x: hidden;
+}
+
+@media (prefers-reduced-motion: reduce ) {
+  *,
+  *::before,
+  *::after{
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  } 
+}

@@ -1,0 +1,37 @@
+<%- include('header', { title: 'Помещения' }) %>
+
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h1 class="mb-0">Помещения</h1>
+    <span class="text-muted">Всего помещений: <b><%= rooms.length %></b></span>
+</div>
+
+<div class="mb-3 d-flex flex-wrap gap-2">
+    <a href="/rooms" class="btn btn-outline-primary">Все</a>
+    <a href="/rooms/type/Аудитория" class="btn btn-outline-primary">Аудитории</a>
+    <a href="/rooms/type/Коворкинг" class="btn btn-outline-primary">Коворкинги</a>
+    <a href="/rooms/type/Кинозал" class="btn btn-outline-primary">Кинозалы</a>
+</div>
+
+<% if (rooms.length === 0) { %>
+    <div class="alert alert-info">Помещения не найдены.</div>
+<% } %>
+
+<div class="row">
+    <% rooms.forEach(r => { %>
+    <div class="col-md-6 col-12 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                    <h5 class="card-title mb-1"><%= r.name %></h5>
+                    <span class="badge bg-info"><%= r.type %></span>
+                </div>
+                <p class="text-muted small mb-3">
+                    Вместимость: <b><%= r.capacity %></b> чел.
+                </p>
+            </div>
+        </div>
+    </div>
+    <% }) %>
+</div>
+
+<%- include('footer') %>

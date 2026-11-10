@@ -1,0 +1,86 @@
+﻿<%- include('header', { title: 'Заявка №' + request.id }) %>
+
+<%
+const badgeClass = request.status === 'Новая'
+    ? 'secondary'
+    : request.status === 'Мероприятие назначено'
+        ? 'primary'
+        : 'success';
+const canReview = isOwner && request.status === 'Завершено' && !request.review;
+%>
+
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h1 class="mb-0">Заявка №<%= request.id %></h1>
+    <a href="<%= isAdmin ? '/admin' : '/dashboard' %>" class="btn btn-outline-secondary">
+        ← Назад к заявкам
+    </a>
+</div>
+
+<div class="row">
+    <div class="col-md-8 col-12">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <h5 class="card-title mb-0"><%= request.room_name %></h5>
+                    <span class="badge bg-<%= badgeClass %>"><%= request.status %></span>
+                </div>
+
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">Помещение</dt>
+                    <dd class="col-sm-8"><%= request.room_name %></dd>
+
+                    <dt class="col-sm-4">Тип</dt>
+                    <dd class="col-sm-8"><%= request.room_type %></dd>
+
+                    <dt class="col-sm-4">Вместимость</dt>
+                    <dd class="col-sm-8"><%= request.room_capacity %> чел.</dd>
+
+                    <dt class="col-sm-4">Дата начала</dt>
+                    <dd class="col-sm-8"><%= request.date_start %></dd>
+
+                    <dt class="col-sm-4">Способ оплаты</dt>
+                    <dd class="col-sm-8"><%= request.payment %></dd>
+
+                    <% if (isAdmin) { %>
+                        <dt class="col-sm-4">Пользователь</dt>
+                        <dd class="col-sm-8"><%= request.user_fio %> (<%= request.user_login %>)</dd>
+
+                        <dt class="col-sm-4">Email</dt>
+                        <dd class="col-sm-8"><%= request.user_email %></dd>
+
+                        <dt class="col-sm-4">Телефон</dt>
+                        <dd class="col-sm-8"><%= request.user_phone %></dd>
+                    <% } %>
+                </dl>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Отзыв</h5>
+
+                <% if (request.review) { %>
+                    <blockquote class="blockquote mb-0">
+                        <p class="mb-0"><%= request.review %></p>
+                    </blockquote>
+                <% } else if (canReview) { %>
+                    <form method="POST" action="/review/<%= request.id %>">
+                        <div class="mb-3">
+                            <textarea class="form-control" name="review" rows="4"
+                                      placeholder="Расскажите о качестве мероприятия" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Оставить отзыв</button>
+                    </form>
+                <% } else if (isOwner) { %>
+                    <p class="text-muted mb-0">
+                        Отзыв можно оставить после завершения мероприятия.
+                    </p>
+                <% } else { %>
+                    <p class="text-muted mb-0">Отзывов пока нет.</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('footer') %>

@@ -1,0 +1,54 @@
+﻿<%- include('header', { title: 'Новая заявка' }) %>
+
+<% const values = typeof form !== 'undefined' ? form : {}; %>
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-12">
+        <h1 class="mb-4">Новая заявка</h1>
+
+        <% if (typeof errors !== 'undefined' && errors && errors.length) { %>
+            <div class="alert alert-danger">
+                <% errors.forEach(e => { %>
+                    <div><%= e %></div>
+                <% }) %>
+            </div>
+        <% } %>
+
+        <form method="POST" action="/create">
+            <div class="mb-3">
+                <label class="form-label">Помещение</label>
+                <select class="form-select" name="room_id" required>
+                    <option value="" disabled <%= values.room_id ? '' : 'selected' %>>Выберите помещение</option>
+                    <% rooms.forEach(r => { %>
+                        <option value="<%= r.id %>" <%= String(values.room_id) === String(r.id) ? 'selected' : '' %>>
+                            <%= r.type %> — <%= r.name %> (<%= r.capacity %> чел.)
+                        </option>
+                    <% }) %>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Дата начала конференции</label>
+                <input type="date" class="form-control" name="date_start"
+                       value="<%= values.date_start || '' %>" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Способ оплаты</label>
+                <select class="form-select" name="payment" required>
+                    <option value="" disabled <%= values.payment ? '' : 'selected' %>>Выберите способ оплаты</option>
+                    <option value="При очном посещении" <%= values.payment === 'При очном посещении' ? 'selected' : '' %>>При очном посещении</option>
+                    <option value="Перевод по СБП" <%= values.payment === 'Перевод по СБП' ? 'selected' : '' %>>Перевод по СБП</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Отправить заявку</button>
+        </form>
+
+        <p class="mt-3 text-center">
+            <a href="/dashboard">Вернуться к моим заявкам</a>
+        </p>
+    </div>
+</div>
+
+<%- include('footer') %>
